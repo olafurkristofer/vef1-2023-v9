@@ -15,7 +15,7 @@ const API_URL = 'https://lldev.thespacedevs.com/2.2.0/';
 
 /**
  * Skilar Promise sem bíður í gefnar millisekúndur.
- * Gott til að prófa loading state, en einnig hægt að nota `throttle` í 
+ * Gott til að prófa loading state, en einnig hægt að nota `throttle` í
  * DevTools.
  * @param {number} ms Tími til að sofa í millisekúndum.
  * @returns {Promise<void>}
@@ -33,7 +33,15 @@ export async function sleep(ms) {
  *  kom upp.
  */
 export async function searchLaunches(query) {
-  /* TODO útfæra */
+  const url = new URL('launch', API_URL);
+  url.searchParams.set('search', query);
+  url.searchParams.set('mode', 'list');
+
+  const response = await fetch(url);
+
+  const json = await response.json();
+
+  return json.results;
 }
 
 /**

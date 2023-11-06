@@ -8,7 +8,16 @@ import { el } from './elements.js';
  * @returns {HTMLElement} Leitarform.
  */
 export function renderSearchForm(searchHandler, query = undefined) {
-  return document.createElement('div');
+  const form = el(
+    'form',
+    {},
+    el('input', { value: query ?? '', name: 'query' }),
+    el('button', {}, 'Leita')
+  );
+
+  form.addEventListener('submit', searchHandler);
+
+  return form;
 }
 
 /**
@@ -35,7 +44,36 @@ function setNotLoading(parentElement, searchForm = undefined) {
  * @param {string} query Leitarstrengur.
  */
 function createSearchResults(results, query) {
-  /* TODO útfæra */
+  const list = el('ul', { class: 'search-results' });
+
+  if (!results) {
+    const noResultsElement = el('li', {}, `Villa við leit að ${query}`);
+    list.appendChild(noResultsElement);
+    return list;
+  }
+
+  if (results.length === 0) {
+    const noResultsElement = el(
+      'li',
+      {},
+      `Engar niðurstöður fyrir leit að ${query}`
+    );
+    list.appendChild(noResultsElement);
+    return list;
+  }
+
+  for (const result of results) {
+    const resultElement = el(
+      'li',
+      { class: 'search-result' },
+      el('span', { class: 'name' }, result.name),
+      el('span', { class: 'mission' }, result.mission)
+    );
+
+    list.appendChild(resultElement);
+  }
+
+  return list;
 }
 
 /**
@@ -45,7 +83,20 @@ function createSearchResults(results, query) {
  * @param {string} query Leitarstrengur.
  */
 export async function searchAndRender(parentElement, searchForm, query) {
-  /* TODO útfæra */
+  parentElement.appendChild(el('p', {}, `Leita að ${query}`));
+
+  const buttonElement = searchForm.querySelector('button');
+  if (buttonElement) {
+    buttonElement.setAttribute('disabled', 'disabled');
+  }
+  const results = await searchLaunches(query);
+  if (buttonElement) {
+    buttonElement.setAttribute('disabled', '');
+  }
+
+  const searchResultsElement = createSearchResults(results, query);
+
+  parentElement.appendChild(searchResultsElement);
 }
 
 /**
@@ -57,16 +108,15 @@ export async function searchAndRender(parentElement, searchForm, query) {
 export function renderFrontpage(
   parentElement,
   searchHandler,
-  query = undefined,
+  query = undefined
 ) {
   const heading = el(
     'h1',
     { class: 'heading', 'data-foo': 'bar' },
-    'Geimskotaleitin 🚀',
-    el('span', {}, 'hallóp'),
+    'Geimskotaleitin 🚀'
   );
   const searchForm = renderSearchForm(searchHandler, query);
-  console.log(heading, searchForm);
+
   const container = el('main', {}, heading, searchForm);
   parentElement.appendChild(container);
 
@@ -87,7 +137,7 @@ export async function renderDetails(parentElement, id) {
   const backElement = el(
     'div',
     { class: 'back' },
-    el('a', { href: '/' }, 'Til baka'),
+    el('a', { href: '/' }, 'Til baka')
   );
 
   parentElement.appendChild(container);

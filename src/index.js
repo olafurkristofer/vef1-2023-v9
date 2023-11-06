@@ -7,7 +7,15 @@ import { renderDetails, renderFrontpage, searchAndRender } from './lib/ui.js';
  * @returns {Promise<void>}
  */
 async function onSearch(e) {
-  /* TODO útfæra */
+  e.preventDefault();
+
+  if (!e.target) {
+    return;
+  }
+
+  const query = e.target.querySelector('input').value;
+
+  searchAndRender(document.body, e.target, query);
 }
 
 /**
