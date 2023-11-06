@@ -9,13 +9,18 @@ import { renderDetails, renderFrontpage, searchAndRender } from './lib/ui.js';
 async function onSearch(e) {
   e.preventDefault();
 
-  if (!e.target) {
+  if (!e.target || !(e.target instanceof Element)) {
     return;
   }
 
-  const query = e.target.querySelector('input').value;
+  const { value } = e.target.querySelector('input') ?? {};
 
-  searchAndRender(document.body, e.target, query);
+  if (!value) {
+    return;
+  }
+
+  await searchAndRender(document.body, e.target, value);
+  window.history.pushState({}, '', `/?query=${value}`);
 }
 
 /**
