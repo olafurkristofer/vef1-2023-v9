@@ -8,7 +8,7 @@ import { el } from './elements.js';
  * @returns {HTMLElement} Leitarform.
  */
 export function renderSearchForm(searchHandler, query = undefined) {
-  /* TODO útfæra */
+  return document.createElement('div');
 }
 
 /**
@@ -59,8 +59,14 @@ export function renderFrontpage(
   searchHandler,
   query = undefined,
 ) {
-  const heading = el('h1', {}, 'Geimskotaleitin 🚀');
+  const heading = el(
+    'h1',
+    { class: 'heading', 'data-foo': 'bar' },
+    'Geimskotaleitin 🚀',
+    el('span', {}, 'hallóp'),
+  );
   const searchForm = renderSearchForm(searchHandler, query);
+  console.log(heading, searchForm);
   const container = el('main', {}, heading, searchForm);
   parentElement.appendChild(container);
 
