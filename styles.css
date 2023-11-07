@@ -63,4 +63,15 @@ main {
   max-width: var(--max-width);
 }
 
+main ul li {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  list-style: none;
+}
+
+main ul li p {
+  padding: 0.5rem;
+}
+
 /* TODO nánari stílar */

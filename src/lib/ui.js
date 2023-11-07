@@ -92,11 +92,13 @@ function createSearchResults(results, query) {
   }
 
   for (const result of results) {
+    const aHrefId = window.history.pushState({}, '', `/?id=${result.id}`);
     const resultElement = el(
       'li',
       { class: 'result' },
-      el('span', { class: 'name' }, result.name),
-      el('span', { class: 'mission' }, result.mission)
+      el('a', { href: aHrefId }, result.name),
+      el('p', { class: 'status' }, 'Staða geimferðar: ', result.status.name),
+      el('p', { class: 'mission' }, result.mission)
     );
 
     list.appendChild(resultElement);
