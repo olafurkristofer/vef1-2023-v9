@@ -92,11 +92,17 @@ function createSearchResults(results, query) {
   }
 
   for (const result of results) {
-    const aHrefId = window.history.pushState({}, '', `/?id=${result.id}`);
     const resultElement = el(
       'li',
       { class: 'result' },
-      el('a', { href: aHrefId }, result.name),
+      el(
+        'a',
+        {
+          href: '',
+          onclick: getLaunch(result.id),
+        },
+        result.name
+      ),
       el('p', { class: 'status' }, 'Staða geimferðar: ', result.status.name),
       el('p', { class: 'mission' }, result.mission)
     );
