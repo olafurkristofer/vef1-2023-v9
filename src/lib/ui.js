@@ -230,16 +230,16 @@ export async function renderDetails(parentElement, id) {
     result.image
   );
 
+  launchContainer.appendChild(launchName);
+  launchContainer.appendChild(launchWindowStart);
+  launchContainer.appendChild(launchWindowEnd);
+  launchContainer.appendChild(launchStatus);
+  launchContainer.appendChild(statusDesc);
+  launchContainer.appendChild(missionName);
+  launchContainer.appendChild(missionDesc);
+  launchContainer.appendChild(launchImg);
+  launchContainer.appendChild(backElement);
   container.appendChild(launchContainer);
-  container.appendChild(launchName);
-  container.appendChild(launchWindowStart);
-  container.appendChild(launchWindowEnd);
-  container.appendChild(launchStatus);
-  container.appendChild(statusDesc);
-  container.appendChild(missionName);
-  container.appendChild(missionDesc);
-  container.appendChild(launchImg);
-  container.appendChild(backElement);
   parentElement.appendChild(container);
   return parentElement;
 }

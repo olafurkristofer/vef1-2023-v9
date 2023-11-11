@@ -58,6 +58,8 @@ main {
   flex-direction: column;
   gap: var(--spacing);
 
+  font-family: var(--font-family);
+
   margin: var(--spacing) auto;
   padding-inline: var(--spacing);
   max-width: var(--max-width);
@@ -82,7 +84,15 @@ main ul li a {
 }
 
 main .box {
-  background-color: brown;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: var(--max-width);
 }
 
-/* TODO nánari stílar */
+main .box h2,
+h3,
+img {
+  padding: var(--spacing) 0;
+}
