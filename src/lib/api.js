@@ -3,9 +3,6 @@
  * @see https://lldev.thespacedevs.com/2.2.0/swagger/
  */
 
-import { el } from './elements.js';
-import { renderDetails } from './ui.js';
-
 /**
  * Sækjum týpurnar okkar.
  * @typedef {import('./api.types.js').Launch} Launch
@@ -75,8 +72,7 @@ export async function searchLaunches(query) {
  */
 export async function getLaunch(id) {
   const url = new URL('launch', API_URL);
-  url.searchParams.set('search', id);
-  url.searchParams.set('mode', 'list');
+  url.searchParams.set('id', id);
 
   let response;
   try {
@@ -103,5 +99,5 @@ export async function getLaunch(id) {
     return null;
   }
 
-  return json;
+  return json.results[0];
 }

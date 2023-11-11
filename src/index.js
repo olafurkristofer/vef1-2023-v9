@@ -47,8 +47,14 @@ function route() {
 
 // Bregst við því þegar við notum vafra til að fara til baka eða áfram.
 window.onpopstate = () => {
-  /* TODO bregðast við */
-  // window.history.back();
+  const pageEl = document.querySelector('body');
+
+  if (!pageEl) {
+    return;
+  }
+
+  empty(pageEl);
+  route();
 };
 
 // Athugum í byrjun hvað eigi að birta.

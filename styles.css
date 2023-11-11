@@ -68,10 +68,21 @@ main ul li {
   flex-direction: column;
   padding: 1rem;
   list-style: none;
+  font-size: 1rem;
 }
 
 main ul li p {
   padding: 0.5rem;
+}
+
+main ul li a {
+  padding: 0.5rem;
+  font-weight: bold;
+  color: inherit;
+}
+
+main .box {
+  background-color: brown;
 }
 
 /* TODO nánari stílar */

@@ -98,8 +98,7 @@ function createSearchResults(results, query) {
       el(
         'a',
         {
-          href: '',
-          onclick: getLaunch(result.id),
+          href: `?id=${result.id}`,
         },
         result.name
       ),
@@ -183,15 +182,64 @@ export async function renderDetails(parentElement, id) {
     el('a', { href: '/' }, 'Til baka')
   );
 
-  parentElement.appendChild(container);
+  const loadingId = el('div', { class: 'loading' }, 'Sæki gögn...');
 
-  /* TODO setja loading state og sækja gögn */
-
-  // Tómt og villu state, við gerum ekki greinarmun á þessu tvennu, ef við
-  // myndum vilja gera það þyrftum við að skilgreina stöðu fyrir niðurstöðu
-  if (!result) {
-    /* TODO útfæra villu og tómt state */
+  let result;
+  try {
+    parentElement.appendChild(loadingId);
+    result = await getLaunch(id);
+    parentElement.appendChild(loadingId).remove();
+  } catch (e) {
+    console.error('Villa við að sækja gögn');
+    return null;
   }
 
-  /* TODO útfæra ef gögn */
+  if (!result) {
+    console.error('Villa við að finna gögn');
+    return null;
+  }
+  const launchContainer = el('div', { class: 'box' });
+  const launchName = el('h2', { class: 'launchName' }, result.name);
+  const launchWindowStart = el(
+    'span',
+    { class: 'windowOpen' },
+    'Gluggi opnaðist: ',
+    result.window_start
+  );
+  const launchWindowEnd = el(
+    'span',
+    { class: 'windowEnd' },
+    'Gluggi lokaðist: ',
+    result.window_end
+  );
+  const launchStatus = el('h3', { class: 'launchStaus' }, result.status.name);
+  const statusDesc = el(
+    'p',
+    { class: 'statusDesc' },
+    result.status.description
+  );
+  const missionName = el('h3', { class: 'missionName' }, result.mission.name);
+  const missionDesc = el(
+    'p',
+    { class: 'missionDesc' },
+    result.mission.description
+  );
+  const launchImg = el(
+    'img',
+    { class: 'launchImg', src: result.image, alt: 'Mynd af geimskotinu' },
+    result.image
+  );
+
+  container.appendChild(launchContainer);
+  container.appendChild(launchName);
+  container.appendChild(launchWindowStart);
+  container.appendChild(launchWindowEnd);
+  container.appendChild(launchStatus);
+  container.appendChild(statusDesc);
+  container.appendChild(missionName);
+  container.appendChild(missionDesc);
+  container.appendChild(launchImg);
+  container.appendChild(backElement);
+  parentElement.appendChild(container);
+  return parentElement;
 }
